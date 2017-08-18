@@ -4,24 +4,37 @@
 	<title>Low level trivia</title>
 	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="assets/javascript/app.js"></script>
 </head>
 <body>
-	<h1>Easy questions, or are they?</h1>
+	<div id="main-container">
+		<div id="title">
+			<h1>Easy questions, or are they?</h1>
+		</div>
+		<div id="questions">
+			<p><span id="Welcome">Welcome to this silly little trivia game. Click here to begin the fun.</span></p>
+		</div>
 
-	<div id="questions">
-		<p><span id="Welcome"></span></p>
+		<div id="answers">	
+			<p>You have 15 seconds per question, just click the correct answer.</p>	
+		</div>
+
+		<div id="timer">		
+		</div>
+
+		<div id="score">
+			<p>You've got this many correct: <span id="correct"></span></p>
+			<p>You've missed this many: <span id="wrong"></span></p>
+		</div>
 	</div>
 
-	<div id="answers">		
+	<div id="correct-splash">
+		<p>That's right!</p>
+		<p>Here's anotherone for you</p>
 	</div>
-
-	<div id="timer">		
-	</div>
-
-	<div class="score">
-		<span id="correct"></span>
-		<span id="wrong"></span>
+	<div id="wrong-splash">
+		<p>Next Time, be less wrong!</p>
 	</div>
 
 </body>

@@ -1,82 +1,142 @@
-$(document).ready(function() {
-	var questions {
-		MiMo:"Who did contact juggling in the movie Labrynth?",
-		Falc:"What is the name of the luck dragon in Neverending Story?",
-	}
+$(document).ready(function () {
 
-	var answers {
-		MiMo: function () {
-			$("#answers").empty();
-			var ans = ["David Bowie","Jennifer Conelly","Michael Moschen","Jim Henson"]
-			dropAnswers(ans);
-			correctAnswer(2);
-		},
-		Falc: function () {
-			$("#answers").empty();
-			var ans = ["Falcor","Smaug","George","Attreu"]
-			dropAnswers(ans);
-			correctAnswer(0);
-		},
-	}
+	var unaskedQuestions = [
+	{	question: "In Star Trek 2, Captain Kirk fights a worthy adversary",
+		answers: ["David Bowie","Khan","Spock","Dirty Hairy"],
+		key: 1
+	},
+	{	question: "Who did contact juggling in the movie Labrynth?",
+		answers: ["David Bowie","Jennifer Conelly","Michael Moschen","Jim Henson"],
+		key: 2
+	},
+	{	question: "What is the name of the luck dragon in Neverending Story?",
+		answers: ["Falcor","Smaug","George","Attreu"],
+		key: 0
+	},
+	{	question: "What is Indiana Jones most afraid of?",
+		answers: ["Fire","Snakes","Defenistration","Your mom"],
+		key: 1
+	},
+	{	question: "In Tolkien lore, what color is Radagast associated with?",
+		answers: ["White","Grey","Blue","Brown"],
+		key: 3
+	},
+	{	question: "In what star system does Luke reside at the beggining of Star Wars 4?",
+		answers: ["Alderan","Tatuine","Endor","Degoba"],
+		key: 1
+	},
+	{	question: "In the Little Mermaid, what's a dinglehopper?",
+		answers: ["A kind of fish","An aquatic robot","A fork","The prince's little general"],
+		key: 2
+	},
+	{	question: "In Lion King, what kind of animal is Pumba?",
+		answers: ["Lion","Jackal","Monkey","Warthog"],
+		key: 3
+	}];
 
-	var qna = ["MiMo","Falc"]
-
-	var time = 10;
+	var askedQuestions = [];
+	var time = 15;
 	var intervalId;
-	var correct = 0;
 	var wrong = 0;
+	var correct = 0;
 
+	$("#Welcome").on("click", function(){
+		clearQA();
+		getQuestion();
+	})
 
-
-	function dropAnswers(arr) {
-		for (i = 0; i < arr.length; i++) {
-			var ansOptions = $("<div>");
-			ansOptions.addClass("answers");
-			ansOptions.attr("ansInd",i);
-	*		ansOptions.text(arr[i]);   //is this the most elegant way to add the answers to the page?
-			$("#answers").append(ansOptions);
-		}		
+	function getQuestion() {
+		intervalId = setInterval(decrement, 1000);
+		var rand = Math.floor(Math.random() * unaskedQuestions.length);
+		var quest = unaskedQuestions[rand].question;
+		$("#questions").html(quest);
+		var ans = unaskedQuestions[rand].answers;
+		var key = unaskedQuestions[rand].key;	
+		console.log("rand = " + rand);	
+		console.log(unaskedQuestions[rand]);
+		for (i = 0; i < ans.length; i++) {
+			var choice = $("<div>");
+			choice.addClass("choice");
+			choice.attr("value",i);
+			choice.html(ans[i]);
+			$("#answers").append(choice);
+		}
+		replaceQ(rand);
+		answerSelect(rand,key);
 	}
 
-	function correctAnswer(j) {
-		$(document).on("click",".answers",function() {
-	****	if (this has a ansInd == j ****) {
+	function replaceQ(x) {
+		unaskedQuestions.splice(x,1);
+		if (unaskedQuestions.length === 0) {
+			//stop this from running anymore
+		}
+	}
+
+	function answerSelect(multi, k) {
+		$(document).on("click",".choice",function() {
+			var element = $(this);		
+			console.log(element);
+			if ($(this).attr("value") == k) {
 				correct++;
-				correctSplash();
 				$("#correct").html(correct);
+				correctSplash();
 			}
 			else {
 				wrong++;
-				wrongSplash();
 				$("#wrong").html(wrong);
+				wrongSplash();
 			}
-		})
+		});
 	}
 
+	function correctSplash() {
+		setTimeout(leaveSplash,2000);
+		$("#correct-splash").css("display","block");
+		stopTime();
+	}
 
-  *	function go() {
-		intervalId = setInterval(decrement, 1000);
-		$("#questions").html("<h2>" + randomquestion + "</h2>");
+	function wrongSplash() {
+		setTimeout(leaveSplash,2000);
+		$("#wrong-splash").css("display","block");
+		stopTime();
+	}
+
+	function leaveSplash() {
+		clearQA();
+		$("#correct-splash").css("display","none");
+		$("#wrong-splash").css("display","none");
+		decrement();
 		getQuestion();
-	}   //this is the first go function, probably triggered at the beggining
+		time = 15;
+		$("#timer").html("<h2>" + time + "</h2>")
+	}
 
 	function decrement() {
 		time--;
 		$("#timer").html("<h2>" + time + "</h2>");
 		if (time === 0) {
 			stopTime();
+			incWrong();
+			wrongSplash();
 		}
-	}
+	};
 
-  	function stopTime() {
+	function stopTime() {
 		clearInterval(intervalId);
+	};
+
+	function clearQA() {
+		$("#questions").empty();
+		$("#answers").empty();
 	}
 
-  *	function correctSplash() {
-
+	function incWrong() {
+		wrong++;
+		$("#wrong").html(wrong);
 	}
 
-  *	function wrongSplash() {
-
+	function incCorrect() {
+		correct++;
+		$("#correct").html(correct);
 	}
 })

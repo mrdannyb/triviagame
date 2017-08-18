@@ -1,0 +1,56 @@
+body {
+	background-image: url("../images/hob-back.jpg");
+	background-size: 100%;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+}
+
+#main-container {
+	margin: 50px;
+	padding: 50px;
+	background-color: #5e9ab4;
+	flex-direction: column;
+	align-content: center;
+	justify-content: space-around;
+	
+}
+
+#questions {
+	margin: 50px 50px 20px 50px;
+	padding: 20px;
+	background-color: #b1cfdc;
+	;
+}
+
+#title {
+	padding: 15px;
+	background-color: #b1cfdc;
+}
+
+#answers {
+	margin: 20px;
+	padding: 20px;
+	background-color: #b1cfdc;
+}
+
+#score {
+	padding: 10px;
+	background-color: #b1cfdc;
+	margin: 5px 50px 5px 50px;
+}
+
+#correct-splash, #wrong-splash {
+	background-color: #cac283;
+	font-size: 24px;
+	color: white;
+	position: absolute;
+	left: 200px;
+	top: 200px;
+	text-align: center;
+	line-height: 100%;
+	display: none;
+	width: 400px;
+	height: 400px;
+
+}

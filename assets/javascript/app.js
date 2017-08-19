@@ -32,6 +32,14 @@ $(document).ready(function () {
 	{	question: "In Lion King, what kind of animal is Pumba?",
 		answers: ["Lion","Jackal","Monkey","Warthog"],
 		key: 3
+	},
+	{	question: "Masters of the Universe, the live action movie, features this beefcake",
+		answers: ["Arnold Schwarzenegger","Dolf Lundren","Lionel Richie","David Hasselhof"],
+		key: 1
+	},
+	{	question: "In The Princess Bride, Indigo Montoya's life goal revolves around...",
+		answers: ["Revenge for a dead father","Revenge for a dead wife","To be the best swordsman in the world","Pizza"],
+		key: 0
 	}];
 
 	var askedQuestions = [];
@@ -39,55 +47,56 @@ $(document).ready(function () {
 	var intervalId;
 	var wrong = 0;
 	var correct = 0;
+	var quest, key, rand, ans;
 
 	$("#Welcome").on("click", function(){
 		clearQA();
 		getQuestion();
 	})
 
+
 	function getQuestion() {
-		intervalId = setInterval(decrement, 1000);
-		var rand = Math.floor(Math.random() * unaskedQuestions.length);
-		var quest = unaskedQuestions[rand].question;
-		$("#questions").html(quest);
-		var ans = unaskedQuestions[rand].answers;
-		var key = unaskedQuestions[rand].key;	
-		console.log("rand = " + rand);	
-		console.log(unaskedQuestions[rand]);
-		for (i = 0; i < ans.length; i++) {
-			var choice = $("<div>");
-			choice.addClass("choice");
-			choice.attr("value",i);
-			choice.html(ans[i]);
-			$("#answers").append(choice);
+		if (unaskedQuestions.length > 0) {
+			intervalId = setInterval(decrement, 1000);
+			rand = Math.floor(Math.random() * unaskedQuestions.length);
+			quest = unaskedQuestions[rand].question;
+			$("#questions").html(quest);
+			ans = unaskedQuestions[rand].answers;
+			key = unaskedQuestions[rand].key;	
+
+			for (i = 0; i < ans.length; i++) {
+				var choice = $("<div>");
+				choice.addClass("choice");
+				choice.attr("value",i);
+				choice.html(ans[i]);
+				$("#answers").append(choice);
+			}
+			unaskedQuestions.splice(rand,1);
+
 		}
-		replaceQ(rand);
-		answerSelect(rand,key);
+		else {
+			clearQA();
+			$("#answers").text("Thanks for playing. I hope you feel more trivi-ish after playing!");
+			$("#questions").text("You finished this quiz!")
+		}
 	}
 
-	function replaceQ(x) {
-		unaskedQuestions.splice(x,1);
-		if (unaskedQuestions.length === 0) {
-			//stop this from running anymore
-		}
-	}
 
-	function answerSelect(multi, k) {
-		$(document).on("click",".choice",function() {
-			var element = $(this);		
-			console.log(element);
-			if ($(this).attr("value") == k) {
-				correct++;
-				$("#correct").html(correct);
-				correctSplash();
-			}
-			else {
-				wrong++;
-				$("#wrong").html(wrong);
-				wrongSplash();
-			}
-		});
-	}
+
+    $("#answers").on("click",".choice",function() {
+        var element = $(this);
+        if (element.attr("value") == key) {
+            correct++;
+            $("#correct").html(correct);
+            correctSplash();
+        }
+        else {
+            wrong++;
+            $("#wrong").html(wrong);
+            wrongSplash();
+        }
+       })
+
 
 	function correctSplash() {
 		setTimeout(leaveSplash,2000);
@@ -105,7 +114,6 @@ $(document).ready(function () {
 		clearQA();
 		$("#correct-splash").css("display","none");
 		$("#wrong-splash").css("display","none");
-		decrement();
 		getQuestion();
 		time = 15;
 		$("#timer").html("<h2>" + time + "</h2>")

@@ -3,6 +3,7 @@ body {
 	background-size: 100%;
 	display: flex;
 	text-align: center;
+	align-items: center;
 	justify-content: center;
 }
 
@@ -12,19 +13,25 @@ body {
 	background-color: #5e9ab4;
 	flex-direction: column;
 	align-content: center;
-	justify-content: space-around;
-	
+	justify-content: space-around;	
 }
 
 #questions {
 	margin: 50px 50px 20px 50px;
 	padding: 20px;
 	background-color: #b1cfdc;
-	;
+	font-size: 17px;
 }
 
 #title {
 	padding: 15px;
+	background-color: #b1cfdc;
+	font-size: 22px;
+}
+
+#timer {
+	margin: 5px;
+	padding: 5px;
 	background-color: #b1cfdc;
 }
 
@@ -32,25 +39,31 @@ body {
 	margin: 20px;
 	padding: 20px;
 	background-color: #b1cfdc;
+	font-size: 17px;
 }
 
 #score {
 	padding: 10px;
 	background-color: #b1cfdc;
 	margin: 5px 50px 5px 50px;
+	font-size: 17px;
 }
 
 #correct-splash, #wrong-splash {
 	background-color: #cac283;
-	font-size: 24px;
+	font-size: 36px;
 	color: white;
 	position: absolute;
 	left: 200px;
-	top: 200px;
+	top: 100px;
 	text-align: center;
-	line-height: 100%;
+	line-height: 400px;
 	display: none;
-	width: 400px;
+	width: 700px;
 	height: 400px;
+}
 
+.choice {
+	border: 3px ridge #b1cfdc;
+	background-color: #c4e6f5;
 }

@@ -42,12 +42,12 @@ $(document).ready(function () {
 		key: 0
 	}];
 
-	var askedQuestions = [];
 	var time = 15;
 	var intervalId;
 	var wrong = 0;
 	var correct = 0;
-	var quest, key, rand, ans;
+	var quest, key, rand, ans, missed;
+
 
 	$("#Welcome").on("click", function(){
 		clearQA();
@@ -63,6 +63,8 @@ $(document).ready(function () {
 			$("#questions").html(quest);
 			ans = unaskedQuestions[rand].answers;
 			key = unaskedQuestions[rand].key;	
+			console.log(unaskedQuestions[rand].answers[key]);
+			$("#missed").text(unaskedQuestions[rand].answers[key]);
 
 			for (i = 0; i < ans.length; i++) {
 				var choice = $("<div>");
@@ -71,8 +73,7 @@ $(document).ready(function () {
 				choice.html(ans[i]);
 				$("#answers").append(choice);
 			}
-			unaskedQuestions.splice(rand,1);
-
+			missed = unaskedQuestions.splice(rand,1);				
 		}
 		else {
 			clearQA();
